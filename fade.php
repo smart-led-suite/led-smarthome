@@ -108,6 +108,6 @@ if($mode != "") {								//change the mode
 ?>
     
     </p><br> <br>
-    <meta http-equiv="refresh" content="5; URL='/beta/index.html">
+    <meta http-equiv="refresh" content="5; URL='/index.html">
 </head>    
 </html>    
