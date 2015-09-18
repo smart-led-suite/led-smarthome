@@ -51,6 +51,27 @@ if($time == "")  //if there's nothing in the variable the input field was empty 
   	$time=$_GET['time'];     // default is time=1000
 }
 
+// change speed first
+if($mode != "") {								//change the mode
+	$cmd = "echo mode=$mode > /dev/led-blaster"; //echo the desired mode into led-blaster, thats all we have to do
+	$val =  shell_exec($cmd); 
+	echo $cmd . "<br>\n";							//debugging info (only used at the beginning)
+	if ($mode == 1 && $speed != "")
+	{
+		$cmd = "echo speed=$speed > /dev/led-blaster"; //echo the desired mode into led-blaster, thats all we have to do
+		$val =  shell_exec($cmd); 
+		echo $cmd . "<br>\n";							//debugging info (only used at the beginning)
+	}
+}
+
+//we want to transmit time everytime its not nothing
+if ($time != "")
+{
+    $cmd = "echo time=" . $time . " > /dev/led-blaster"; //echo the desired time into led-blaster
+    $val =  shell_exec($cmd); //and execute that command
+    echo "<br>" . $cmd . "<br>\n";	
+}
+
 $numberOfChangedBrightness = 0;
 
 //wenn etwas in das Textfeld eingetragen wird, dann wird dieser wert der jeweiligen helligkeitFarbe zugeordnet
@@ -85,29 +106,13 @@ if ($numberOfChangedBrightness > 0) //only if we have to change the brightness o
     }
 }
 
-//we want to transmit time everytime its not nothing
-if ($time != "")
-{
-    $cmd = "echo time=" . $time . " > /dev/led-blaster"; //echo the desired time into led-blaster
-    $val =  shell_exec($cmd); //and execute that command
-    echo "<br>" . $cmd . "<br>\n";	
-}
 
-if($mode != "") {								//change the mode
-	$cmd = "echo mode=$mode > /dev/led-blaster"; //echo the desired mode into led-blaster, thats all we have to do
-	$val =  shell_exec($cmd); 
-	echo $cmd . "<br>\n";							//debugging info (only used at the beginning)
-	if ($mode == 1 && $speed != "")
-	{
-		$cmd = "echo speed=$speed > /dev/led-blaster"; //echo the desired mode into led-blaster, thats all we have to do
-		$val =  shell_exec($cmd); 
-		echo $cmd . "<br>\n";							//debugging info (only used at the beginning)
-	}
-}
+
+
 
 ?>
     
     </p><br> <br>
-    <meta http-equiv="refresh" content="5; URL='/index.html">
+    <!-- <meta http-equiv="refresh" content="5; URL='/index.html"> -->
 </head>    
 </html>    
