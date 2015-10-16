@@ -20,7 +20,6 @@
 <?php
 
 $mode = $_GET['mode'];  //fade einlesen
-$speed = $_GET['speed'];  //speed einlesen
 $time = $_GET['a_time']; 	//time einlesen
 //$a_time = $_GET['a_time'];
 
@@ -42,10 +41,6 @@ $colorName = array( //array for the names of the colors (matching the names in l
 3 => 'b',
  );
 
-if($speed == "")  
-{
-  	$speed=1;     // default is factor 1
-}
 if($time == "")  //if there's nothing in the variable the input field was empty -> we'll take the range input field then
 {
   	$time=$_GET['time'];     // default is time=1000
@@ -67,13 +62,26 @@ for ($color = 0; $color < 4; $color++) //some things we have to apply to each co
 	}
 }
 
+//we want to transmit time everytime its not nothing
+if ($time != "")
+{
+    $cmd = "echo time=" . $time . " > /dev/led-blaster"; //echo the desired time into led-blaster
+    $val =  shell_exec($cmd); //and execute that command
+    echo "<br>" . $cmd . "<br>\n";	
+}
+
 
 if ($numberOfChangedBrightness > 0) //only if we have to change the brightness of at least one color
 {
-    
-    $cmd = "echo wait=$numberOfChangedBrightness > /dev/led-blaster"; 			//set wait counter to $numberOfChangedBrightness (itll fade after changing four colorBrightnesses if everything was changed
+	//enter mode 0 so we can set brightness manually
+    	$cmd = "echo mode=0 > /dev/led-blaster"; 
+	$val =  shell_exec($cmd);
+	echo $cmd . "<br>";
+	//set wait counter to $numberOfChangedBrightness (itll fade after changing four colorBrightnesses if everything was changed
+    	$cmd = "echo wait=$numberOfChangedBrightness > /dev/led-blaster"; 			
 	$val =  shell_exec($cmd); 
 	echo $cmd . "<br>";							//debugging info (only used at the beginning)
+	//FADE
 	for ($color = 0; $color < 4; $color++) //write every color's brightness to fifo
 	{
 		if ($luminance[$color] != -1 && $luminance[$color] != "") //if we have to change the brightness and theres acutally a brightness ;_)
@@ -85,24 +93,12 @@ if ($numberOfChangedBrightness > 0) //only if we have to change the brightness o
     }
 }
 
-//we want to transmit time everytime its not nothing
-if ($time != "")
-{
-    $cmd = "echo time=" . $time . " > /dev/led-blaster"; //echo the desired time into led-blaster
-    $val =  shell_exec($cmd); //and execute that command
-    echo "<br>" . $cmd . "<br>\n";	
-}
+
 
 if($mode != "") {								//change the mode
 	$cmd = "echo mode=$mode > /dev/led-blaster"; //echo the desired mode into led-blaster, thats all we have to do
 	$val =  shell_exec($cmd); 
 	echo $cmd . "<br>\n";							//debugging info (only used at the beginning)
-	if ($mode == 1 && $speed != "")
-	{
-		$cmd = "echo speed=$speed > /dev/led-blaster"; //echo the desired mode into led-blaster, thats all we have to do
-		$val =  shell_exec($cmd); 
-		echo $cmd . "<br>\n";							//debugging info (only used at the beginning)
-	}
 }
 
 ?>
