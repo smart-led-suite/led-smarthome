@@ -1,62 +1,180 @@
 <html>
 <head>
-<meta charset="UTF-8" /> 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>(beta) LED Steuerung @ Home</title>
-<link rel="icon" 
-      type="image/ico" 
-      href="favicon.ico">
- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>    
-<!-- import custom stylesheet -->
-    
-<link rel="stylesheet" media="screen" href="design.css">    
-    
+    <title>(beta) LED Steuerung @ Home</title>
+    <link rel="icon" 
+          type="image/ico" 
+          href="favicon.ico">
+     <!-- import google material design apis -->
+     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-blue.min.css" /> 
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- import custom stylesheet -->
+    <link rel="stylesheet" media="screen" href="design.css">   
+ 
+
 </head>
 <body  bgcolor="#d6d6d6">
-<p id="default" >     
-<b> Licht an und ausschalten: </b>
-    </p>
-<form action="fade.php" method="get">
-   <p id="white" >  
-        weiß: <br>
-        <input type="range" name="w" min="0" max="1000" step="1" value="0">
-        <br> 
-        <input type="checkbox" name="w" value="-1" checked>keine Änderung
-       <br>
-    </p>   
-    <p id="red">
-        rot: <br>
-        <input type="range" name="r" min="0" max="1000" step="1" value="0">
-        <br> 
-        <input type="checkbox" name="r" value="-1" checked >keine Änderung
-        <br>
-    </p>
-    <p id="green" >
-        grün: <br>
-        <input type="range"  name="g" min="0" max="1000" step="1" value="0"> 
-        <br> 
-        <input type="checkbox" name="g" value="-1" checked>keine Änderung
-        <br>
-    </p>
-    <p id="blue" >
-        blau: <br>
-        <input type="range"  name="b" min="0" max="1000" step="1" value="0"> 
-        <br> 
-        <input type="checkbox" name="b" value="-1" checked>keine Änderung
-        <br>
-    </p>
-   <p id="button" >
-  <input type="submit" value="LEDs schalten">
-    </p>
-</form>
-<p id="default">
-    <a href="advanced.html">Erweitert</a> <br><br>
-    <b>Weitere Funktionen: </b> <br><br>      
-    <a href="wecker.php">Wecker</a> <br>
-    <a href="index-oldhtml.html">alte Fadeseite</a> bei Problemen mit HTML/Bugs
-     </p> 
+        <!-- Simple header with fixed tabs. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+                mdl-layout--fixed-tabs">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <!-- Title -->
+        <span class="mdl-layout-title">LED Control Panel</span>
+             <div class="mdl-layout-spacer"></div>
+             <!-- nav bar 
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="wecker.php">Wecker (beta)</a>
+                <a class="mdl-navigation__link" href="index-oldhtml.html">alte Fadeseite</a>
+            </nav> -->
+        </div>
+        <!-- drawer -->
+          
+        <!-- Tabs -->
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+          <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Steady Lighting</a>
+          <a href="#fixed-tab-2" class="mdl-layout__tab">Advanced</a>
+        </div>
+         
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">LED Control Panel</span>
+        <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="wecker.php">Wecker (beta)</a>
+                <a class="mdl-navigation__link" href="index-oldhtml.html">alte Fadeseite</a>  
+      </div>
+      <main class="mdl-layout__content">
+        <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+          <div class="page-content">
+    <!-- Steady lighting is the former index.html with the sliders -->
+    <div class="mdl-grid ">
+        <div class="mdl-cell   mdl-cell--3-col-desktop mdl-cell--hide-phone mdl-cell--hide-tablet ">
+            <!-- empty cell so the design looks good on desktop -->
+        </div>
+        <div class="mdl-cell mdl-cell--middle mdl-cell--stretch mdl-cell--6-col mdl-cell--4-col-phone mdl-cell--6-col-tablet ">
+            <div class="mdl-card  mdl-shadow--4dp steady_lighting-card"> 
+                <form action="fade.php" method="get">
+                <div class="mdl-card__actions mdl-card--border">    
 
-<br> <br>
+                        weiß: 
+                        <input class="mdl-slider mdl-js-slider" type="range" name="w" min="0" max="1000" step="1" value="0">
+
+                        <label for="chkboxW" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                            <input type="checkbox" id="chkboxW" class="mdl-checkbox__input" name="w" value="-1"  checked>
+                            <span class="mdl-checkbox__label">keine Änderung</span>
+                        </label> 
+                </div> 
+
+                 <div class="mdl-card__actions mdl-card--border" style="background-color: rgba(178, 34, 34, 0.78);">  
+                        rot: 
+                        <input class="mdl-slider mdl-js-slider" type="range" name="r" min="0" max="1000" step="1" value="0">
+
+
+                        <label for="chkboxR" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                            <input type="checkbox" id="chkboxR" class="mdl-checkbox__input" name="r" value="-1"  checked>
+                            <span class="mdl-checkbox__label">keine Änderung</span>
+                        </label>
+                        <br>
+                 </div> 
+                 <div class="mdl-card__actions mdl-card--border" style="background-color: rgba(34, 139, 34, 0.73);">      
+                        grün: 
+                        <input class="mdl-slider mdl-js-slider"  type="range"  name="g" min="0" max="1000" step="1" value="0"> 
+
+                        <label for="chkboxG" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                            <input type="checkbox" id="chkboxG" class="mdl-checkbox__input" name="g" value="-1"  checked>
+                            <span class="mdl-checkbox__label">keine Änderung</span>
+                        </label>
+                    </div>     
+                    <div class="mdl-card__actions mdl-card--border" style="background-color: rgba(30, 144, 255, 0.87);">  
+                        blau: 
+                        <input class="mdl-slider mdl-js-slider" type="range"  name="b" min="0" max="1000" step="1" value="0"> 
+
+                        <label for="chkboxB" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+                            <input type="checkbox" id="chkboxB" class="mdl-checkbox__input" name="b" value="-1"  checked>
+                            <span class="mdl-checkbox__label">keine Änderung</span>
+                        </label>
+                        <br>
+
+                    </div>    
+                    <div class="mdl-card__actions mdl-card--border">
+                   <!-- Accent-colored raised button with ripple -->
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        LEDs schalten
+                    </button>
+                    </div>
+                </form>
+            </div> 
+        </div>    
+    </div>          
+    
+    <!--<p id="button" >
+       
+  <input type="submit" value="LEDs schalten">
+    </p>-->
+    
+        </div>
+        </section>
+        <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+          <div class="page-content">
+              <!-- former advanced html is now here! -->
+              <div class="mdl-grid ">
+                <div class="mdl-cell   mdl-cell--3-col-desktop mdl-cell--hide-phone mdl-cell--hide-tablet ">
+                    <!-- empty cell so the design looks good on desktop -->
+                  </div>
+                <div class="mdl-cell mdl-cell--middle mdl-cell--stretch mdl-cell--6-col mdl-cell--4-col-phone mdl-cell--6-col-tablet ">
+                    <div class="mdl-card  mdl-shadow--4dp steady_lighting-card"> 
+                        <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">Mode wählen</h2>
+                        </div>
+                        <form action="fade.php">
+                        <div class="mdl-card__actions mdl-card--border">    
+                                    <b> zusätzliche Modi</b>: <br><br>
+                            neben dem Einstellen festen Farben gibt es noch zwei zusätzliche Modi.<br>
+                               
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                                            <input type="radio" id="option-1" class="mdl-radio__button" name="mode" value="0" checked>
+                                            <span class="mdl-radio__label">Mode 0</span>
+                                    </label>
+                                    feste Farben, die <a href="/index.html">hier</a> eingestellt werden <br>
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                                        <input type="radio" id="option-2" class="mdl-radio__button" name="mode" value="1">
+                                        <span class="mdl-radio__label">Mode 1</span>
+                                    </label>
+                                    Fade zu zufällig generierten Farben 
+                                <br>                                    
+                                <!-- Accent-colored raised button with ripple -->
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                    Mode wählen
+                                 </button>
+                                    
+                                 </div>
+                            </form>
+                    </div>
+                    <div class="mdl-card mdl-shadow--4dp steady_lighting-card">   
+                        <div class="mdl-card__title">
+                              <h2 class="mdl-card__title-text">Fadezeit einstellen</h2>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">   
+                        <form action="fade.php">                                     
+                             bestimmt, wie lange es dauert (in Millisekunden) bis alle LEDs bei der gewünschten Helligkeit sind <br>
+                             <input type="number" name="a_time" min="200" max="1000000"> (maximal 1 Mio.) <br>
+                             oder mit dem Slider auswählen (200-5'000)
+                             <input class="mdl-slider mdl-js-slider" type="range" name="time" min="200" max="5000" step="1" value="0">                                                          
+                             <!-- Accent-colored raised button with ripple -->
+                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                 Fadezeit ändern
+                             </button>
+                        </form>
+                        </div>
+                    </div>
+                </div>     
+            </div>
+        </section>
+        
+      </main>
+    </div>
 </body>
 </html>
