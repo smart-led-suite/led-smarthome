@@ -101,9 +101,20 @@ if($mode != "") {								//change the mode
 	echo $cmd . "<br>\n";							//debugging info (only used at the beginning)
 }
 
+if($_GET['url']=='')
+{
+	$previousPage = "index.php";
+} 
+else
+{
+	$previousPage = $_GET['url'];
+}
+//echo $previousPage;
+
+
 ?>
     
     </p><br> <br>
-    <meta http-equiv="refresh" content="5; URL='/index.html">
+    <meta http-equiv="refresh" content="3; URL='<?= $previousPage ?>'">
 </head>    
 </html>    
