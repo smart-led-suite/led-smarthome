@@ -1,13 +1,10 @@
 
-       
 
-     
+
+
         #red {
-                
-           
-                
                 color: white;
-                background-color: rgb(222, 37, 37);
+                background-color: #bb0600;
         }
         #green {
                 color: white;
@@ -16,7 +13,7 @@
 
         }
         #blue {
-                
+
                 font-weight: lighter;
                 color: white;
                 background-color: #0515d3;
@@ -24,14 +21,14 @@
         #white {
                 font-weight: normal;
                 color: black;
-                background-color: white;
+                background-color: #ffffff;
         }
         #button {
                 text-alignr: center;
                 font-family: sans-serif;
                 font-style: normal;
         }
-         
+
         #default {
                 text-align: center;
                 font-family: sans-serif;
@@ -50,8 +47,8 @@
                 font-style: normal;
                 background-color: lightslategrey;
         }
- 
-       
+
+
 
         .steady_lighting-card.mdl-card {
             width: auto;
@@ -65,9 +62,9 @@
             padding-bottom: 0px;
             padding: inherit;
             background-color: whitesmoke
-            
+
         }
-        
+
         .material-icons {
 	    font-family: "Material Icons";
 	    font-weight: normal;
