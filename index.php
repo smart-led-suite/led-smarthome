@@ -32,8 +32,9 @@
                 <div class="mdl-layout-spacer"></div>
                 <!-- Navigation. We hide it in small screens. -->
                 <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    <a class="mdl-navigation__link" href="wecker.php">Wecker (beta)</a>
-                    <a class="mdl-navigation__link" href="index-oldhtml.html">alte Fadeseite</a>
+                  <a class="mdl-navigation__link" href="configurator.php">Konfiguration</a>
+                  <a class="mdl-navigation__link" href="wecker.php">Wecker (beta)</a>
+                  <a class="mdl-navigation__link" href="index-oldhtml.html">alte Fadeseite</a>
                 </nav>
             </div>
         </header>
@@ -41,8 +42,9 @@
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">LED Control Panel</span>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="wecker.php">Wecker (beta)</a>
-                <a class="mdl-navigation__link" href="index-oldhtml.html">alte Fadeseite</a>
+              <a class="mdl-navigation__link" href="configurator.php">Konfiguration</a>
+              <a class="mdl-navigation__link" href="wecker.php">Wecker (beta)</a>
+              <a class="mdl-navigation__link" href="index-oldhtml.html">alte Fadeseite</a>
            </nav>
         </div>
 
@@ -52,57 +54,71 @@
     <!-- Steady lighting is the former index.html with the sliders -->
 
               <div class="mdl-grid ">
-
                 <div class="mdl-cell mdl-cell--middle  mdl-cell--stretch mdl-cell--6-col mdl-cell--4-col-phone mdl-cell--8-col-tablet ">
                     <div class="mdl-card mdl-shadow--4dp steady_lighting-card">
                      <?php
-          				    //read the config file and save results in array
-          				    $color = 0;
-          					if (($handle = fopen("example.csv", "r")) !== FALSE) {
-          						while (($colorData = fgetcsv($handle, 1000, ";")) !== FALSE) {
-          						$num = count($colorData);
-          						//echo "<p> $num Felder in Zeile $color: <br /></p>\n";
+                      //read the config file and save results in array
+                      //the configfiles layout is like that:
+                      //      colorCode;  pin;  font-color; background-color; colorName
+                      //e.g.  w           17    black       whitesmoke        weiß
+                      $nColors = 0;
+                      if (($handle = fopen("colors.csv", "r")) !== FALSE) {
+                        while (($colorConfig = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                          $num = count($colorConfig);
+                          for ($c=0; $c < $num; $c++) {
+                            $globalConfig[$nColors][$c]=$colorConfig[$c];
+                          }
+                        $nColors++;
 
-          						for ($c=0; $c < $num; $c++) {
-          							$allColors[$color][$c]=$colorData[$c];
-          						}
-          						$color++;
+                        }
+                        fclose($handle);
+                      }
+                      //read the current brightness file
+                      //the example.csv and the colors.csv must have the same colors defined!
+                      $ncurrentColors = 0;
+                      if (($handle = fopen("example.csv", "r")) !== FALSE) {
+                        while (($brightness = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                          $num = count($brightness);
+                          for ($c=0; $c < $num; $c++) {
+                             $colorBrightness[$ncurrentColors][$c]=$brightness[$c];
+                          }
+                        $ncurrentColors++;
 
-          						}
-          						fclose($handle);
-          					}
-          					//echo "http: " . $_SERVER['PHP_SELF'];
-          				    ?>
-
-
-
-                        <div class="mdl-card__title">
-                            <h2 class="mdl-card__title-text">Farben einstellen</h2>
-                        </div>
-                        <form action="fade.php" method="get">
+                        }
+                        fclose($handle);
+                      }
+                      ?>
+                      <div class="mdl-card__title">
+                          <h2 class="mdl-card__title-text">Farben einstellen</h2>
+                      </div>
+                      <form action="fade.php" method="get">
                         <input type="hidden" name="url" value="<?php echo $_SERVER['PHP_SELF'] ?>" />
+                        <?php
 
-                        <div class="mdl-card__actions mdl-card--border" id="white">
+                        for ($color=0; $color < $nColors; $color++) {
+                          //printing the card with background-color and font color from csv file.
+                          echo "<div class=\"mdl-card__actions mdl-card--border\" style=\"color:"  . $globalConfig[$color][2] . "; background-color:" . $globalConfig[$color][3] . "; \" > \n";
+                          //printing the colorName string
+                          echo $globalConfig[$color][4] . "\n";
+                          echo "<input class=\"mdl-slider mdl-js-slider\" type=\"range\" name=\"" . $globalConfig[$color][0] . "\" min=\"0\" max=\"1000\" step=\"1\" value=\"";
+                          //check for every color because we dont know how theyre ordered
+                          $colorBrightnessKey = 0;
+                          //we'll search for the right currentBrightness with the primary key colorCode
+                          //i dont know why but we have to use strncmp otherwise it can't detect if the variables are the same or not.
+                          //if its not the matching currentBrightness we'll look for the next one (therefore increase colorBrightnessKey)
+                          while(strncmp($globalConfig[$color][0] , $colorBrightness[$colorBrightnessKey][0], 1)!=0) {
+                            $colorBrightnessKey++;
+                          }
+                          //then write current brightness as value
+                          echo $colorBrightness[$colorBrightnessKey][1]  . "\">\n";
+                          //and close the div container
+                          echo "</div>\n";
+                        }
+                        //end of table row and data
 
-                                weiß:
-                                <input class="mdl-slider mdl-js-slider" type="range" name="<?=$allColors[3][0] ?>" min="0" max="1000" step="1" value="<?=$allColors[3][1] ?>">
-                        </div>
+                         ?>
 
-                         <div class="mdl-card__actions mdl-card--border " id="red">
-                                rot:
-                                <input class="mdl-slider mdl-js-slider" type="range" name="<?=$allColors[2][0] ?>" min="0" max="1000" step="1" value="<?=$allColors[2][1] ?>">
 
-                         </div>
-                         <div class="mdl-card__actions mdl-card--border" id="green">
-                                grün:
-                                <input class="mdl-slider mdl-js-slider" type="range" name="<?=$allColors[1][0] ?>" min="0" max="1000" step="1" value="<?=$allColors[1][1] ?>">
-                            </div>
-                            <div class="mdl-card__actions mdl-card--border" id="blue" >
-
-                                 blau:
-                                <input class="mdl-slider mdl-js-slider" type="range" name="<?=$allColors[0][0] ?>" min="0" max="1000" step="1" value="<?=$allColors[0][1] ?>">
-
-                            </div>
                             <div class="mdl-card__actions ">
                                  <div class="mdl-grid ">
                                      <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--3-col-phone">
@@ -111,7 +127,9 @@
                                             LEDs schalten
                                         </button>
                                      </div>
-                        </form>
+
+
+
                                      <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--3-col-tablet mdl-cell--3-col-phone">
                                         <form action="fade.php" method="get">
                                         	<input type="hidden" name="url" value="<?php echo $_SERVER['PHP_SELF'] ?>" />
@@ -130,8 +148,8 @@
                                      </div>
                                 </div>
                             </div>
-                    </div>
-                  </div>
+                          </div>
+                          </div>
                 <div class="mdl-cell  mdl-cell--col mdl-cell--3-col-desktop  mdl-cell--4-col-tablet mdl-cell--top">
                     <!-- mdl-cell--3-col-desktop  mdl-cell--2-col-tablet -->
                  <div class="mdl-card  mdl-shadow--4dp steady_lighting-card">
