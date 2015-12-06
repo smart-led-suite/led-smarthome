@@ -44,7 +44,6 @@
             }
             fclose($handle);
           }
-          //echo $nColors;
           //read the current brightness file
           //the example.csv and the colors.csv must have the same colors defined!
           $ncurrentColors = 0;
@@ -59,21 +58,21 @@
             }
             fclose($handle);
           }
-          //echo $colorBrightness[1][0];
-          //echo "\n ncurrentColors: " . $ncurrentColors;
-
-          //echo "http: " . $_SERVER['PHP_SELF'];
           ?>
           <div class="mdl-card__title">
               <h2 class="mdl-card__title-text">Farben einstellen</h2>
           </div>
           <form action="fade.php" method="get">
             <input type="hidden" name="url" value="<?php echo $_SERVER['PHP_SELF'] ?>" />
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+              <tbody>
             <?php
 
             for ($color=0; $color < $nColors; $color++) {
+              //new table row and data
+              //echo "<tr><td> \n";
               //printing the card with background-color and font color from csv file.
-              echo "<div class=\"mdl-card__actions mdl-card--border\" style=\"color:"  . $globalConfig[$color][2] . "; background-color:" . $globalConfig[$color][3] . "; \" > \n";
+              echo "<tr style=\"color:"  . $globalConfig[$color][2] . "; background-color:" . $globalConfig[$color][3] . "; \" > <td> \n";
               //printing the colorName string
               echo $globalConfig[$color][4] . "\n";
               echo "<input class=\"mdl-slider mdl-js-slider\" type=\"range\" name=\"" . $globalConfig[$color][0] . "\" min=\"0\" max=\"1000\" step=\"1\" value=\"";
@@ -88,9 +87,15 @@
               //then write current brightness as value
               echo $colorBrightness[$colorBrightnessKey][1]  . "\">\n";
               //and close the div container
-              echo "</div>\n";
+              //echo "</div>\n";
+              echo "</td></tr> \n";
             }
+            //end of table row and data
+
              ?>
+          </tbody>
+        </table>
+
                 <div class="mdl-card__actions ">
                      <div class="mdl-grid ">
                          <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--4-col-tablet mdl-cell--3-col-phone">
@@ -99,9 +104,10 @@
                                 LEDs schalten
                             </button>
                          </div>
-            </form>
+
           </div>
         </div>
+        </form>
       </div>
     </div>
   </div>
