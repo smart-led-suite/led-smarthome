@@ -127,6 +127,8 @@
                                             LEDs schalten
                                         </button>
                                      </div>
+                                     </form>
+
 
 
 
@@ -149,7 +151,7 @@
                                 </div>
                             </div>
                           </div>
-                          </div>
+                </div>
                 <div class="mdl-cell  mdl-cell--col mdl-cell--3-col-desktop  mdl-cell--4-col-tablet mdl-cell--top">
                     <!-- mdl-cell--3-col-desktop  mdl-cell--2-col-tablet -->
                  <div class="mdl-card  mdl-shadow--4dp steady_lighting-card">
