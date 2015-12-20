@@ -74,9 +74,9 @@
                         fclose($handle);
                       }
                       //read the current brightness file
-                      //the example.csv and the colors.csv must have the same colors defined!
+                      //the brightness.csv and the colors.csv must have the same colors defined!
                       $ncurrentColors = 0;
-                      if (($handle = fopen("example.csv", "r")) !== FALSE) {
+                      if (($handle = fopen("brightness.csv", "r")) !== FALSE) {
                         while (($brightness = fgetcsv($handle, 1000, ";")) !== FALSE) {
                           $num = count($brightness);
                           for ($c=0; $c < $num; $c++) {
@@ -106,7 +106,7 @@
                           //we'll search for the right currentBrightness with the primary key colorCode
                           //i dont know why but we have to use strncmp otherwise it can't detect if the variables are the same or not.
                           //if its not the matching currentBrightness we'll look for the next one (therefore increase colorBrightnessKey)
-                          while(strncmp($globalConfig[$color][0] , $colorBrightness[$colorBrightnessKey][0], 1)!=0) {
+                          while(strcmp($globalConfig[$color][0] , $colorBrightness[$colorBrightnessKey][0])!=0) {
                             $colorBrightnessKey++;
                           }
                           //then write current brightness as value
