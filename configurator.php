@@ -3,6 +3,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="expires" content="0">
+       <!-- Chrome, Firefox OS and Opera -->
+		<meta name="theme-color" content="#3f51b5">
+		<!-- Windows Phone -->
+		<meta name="msapplication-navbutton-color" content="#3f51b5">
+		<!-- iOS Safari -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="blue-translucent">
     <title>Konfigurator von LED Steuerung @ Home</title>
     <link rel="icon"
           type="image/ico"
@@ -22,6 +29,9 @@
 
 </head>
   <body  bgcolor="#d6d6d6">
+    <script>
+      var writeSuccess; //variable in js to check if writing was successful
+    </script>
           <!-- Simple header with fixed tabs. -->
       <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header led-layout ">
           <header class="mdl-layout__header mdl-layout__header--scroll">
@@ -86,16 +96,18 @@
                    $config = $code[$color] . ";" . $pin[$color] . ";" . $textColor[$color] . ";" . $displayColor[$color] . ";" . $name[$color] . "\n";
                    fwrite($file, $config);
                  }
-                 echo
-                 "<div class=\"mdl-card__title\">
-                     <h2 class=\"mdl-card__title-text\" style=\"color:green\">    writing to file successful </h2> </div>";
+                 //echo
+                 //"<div class=\"mdl-card__title\">
+                //     <h2 class=\"mdl-card__title-text\" style=\"color:green\">    writing to file successful </h2> </div>";
+                 echo "<script>writeSuccess = true;</script> \n";
                  fclose($file);
              }
               else
              {
-               echo
-               "<div class=\"mdl-card__title\">
-               <h2 class=\"mdl-card__title-text\" style=\"color:red\"> settings couldn't be saved :( </h2></div>";
+               //echo
+               //"<div class=\"mdl-card__title\">
+               //<h2 class=\"mdl-card__title-text\" style=\"color:red\"> settings couldn't be saved :( </h2></div>";
+                echo "<script>writeSuccess = false;</script";
              }
 
            }
@@ -118,15 +130,16 @@
              fclose($handle);
            }
            ?>
-          <form action="" method="post">
+          <form action="" method="post" >
+           <div style="overflow-x:auto;">
             <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
               <thead>
                 <tr>
-                  <th class="mdl-data-table__cell--non-numeric">Name</th>
-                  <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >Code</th>
+                  <th class="mdl-data-table__cell--non-numeric">Farbname</th>
+                  <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >ColorCode</th>
                   <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >Pin</th>
                   <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >Farbe</th>
-                  <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >Text</th>
+                  <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >Textfarbe</th>
                 </tr>
               </thead>
               <tbody>
@@ -153,11 +166,11 @@
                     echo "<input class=\"mdl-textfield__input\" type=\"text\" id=\"code" . $globalConfig[$color][0] . "\" ";
                     echo " name=\"code[]\" value=\"". $globalConfig[$color][0] . "\"> \n";
                     //generate label
-                    echo "<label class=\"mdl-textfield__label\" for=\"code" . $globalConfig[$color][0] . "\">Code</label> \n";
+                    echo "<label class=\"mdl-textfield__label\" for=\"code" . $globalConfig[$color][0] . "\">ColorCode</label> \n";
                     echo "</div> \n"; //end of div container
                     echo "</td>  \n"; //end of this data part
                     //PIN
-                    echo "<td> \n"; //new table data, Code field
+                    echo "<td> \n"; //new table data, pin field
                     //create new textfield
                     echo " <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label\" style=\"width:auto;\"> \n";
                     //fill in textfield
@@ -168,14 +181,14 @@
                     echo "</div> \n"; //end of div container
                     echo "</td>  \n"; //end of this data part
                     //FARBE / COLOR
-                    echo "<td> \n"; //new table data, Code field
+                    echo "<td> \n"; //new table data, color field
                     echo "<br>\n"; //add a new line so it is at the same height as the other input fields
                     //new color input field
                     echo "<input class=\"mdl-textfield__input\" type=\"color\" ";
                     echo " name=\"color[]\" value=\"". $globalConfig[$color][3] . "\"> \n";
                     echo "</td>  \n"; //end of this data part
                     //FARBE / COLOR
-                    echo "<td> \n"; //new table data, Code field
+                    echo "<td> \n"; //new table data, textcolor field
                     echo "<br>\n"; //add a new line so it is at the same height as the other input fields
                     //new color input field
                     echo "<input class=\"mdl-textfield__input\" type=\"color\" ";
@@ -209,7 +222,7 @@
                 </tr> -->
               </tbody>
             </table>
-
+					 </div>
 
             <?php
 
@@ -228,5 +241,14 @@
       </div>
     </div>
   </div>
+  <script>
+    if (writeSuccess == true) {
+      window.alert("writing to file successful");
+    } else if (writeSuccess == FALSE){
+        window.alert("a problem occured while writing to file");
+    }
+
+  </script>
 </body>
+
 </html>

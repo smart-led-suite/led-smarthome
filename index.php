@@ -3,6 +3,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="expires" content="0">
+    <!-- Chrome, Firefox OS and Opera -->
+		<meta name="theme-color" content="#3f51b5">
+		<!-- Windows Phone -->
+		<meta name="msapplication-navbutton-color" content="#3f51b5">
+		<!-- iOS Safari -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="blue-translucent">
     <title>(beta) LED Steuerung @ Home</title>
     <link rel="icon"
           type="image/ico"
@@ -100,7 +107,7 @@
                           echo "<div class=\"mdl-card__actions mdl-card--border\" style=\"color:"  . $globalConfig[$color][2] . "; background-color:" . $globalConfig[$color][3] . "; \" > \n";
                           //printing the colorName string
                           echo $globalConfig[$color][4] . "\n";
-                          echo "<input class=\"mdl-slider mdl-js-slider\" type=\"range\" name=\"" . $globalConfig[$color][0] . "\" min=\"0\" max=\"1000\" step=\"1\" value=\"";
+                          echo "<input class=\"mdl-slider mdl-js-slider\" type=\"range\" name=\"" . $globalConfig[$color][0] . "\" min=\"0\" max=\"1000\" step=\"4\" value=\"";
                           //check for every color because we dont know how theyre ordered
                           $colorBrightnessKey = 0;
                           //we'll search for the right currentBrightness with the primary key colorCode
@@ -142,7 +149,7 @@
                                             <input type="hidden" name="b" value="0">
                                             <input type="hidden" name="mode" value="0">
                                            <!-- Accent-colored raised button with ripple -->
-                                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                                            <button  onclick="showFadingInfo()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
                                                 ALLES AUS
                                             </button>
                                         </form>
@@ -213,5 +220,11 @@
         </div>
     </main>
 </div>
+<script>
+  function showFadingInfo() {
+    window.alert("leds are fading");
+  }
+
+</script>
 </body>
 </html>
