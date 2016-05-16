@@ -22,25 +22,43 @@
 $mode = $_GET['mode'];  //fade einlesen
 $time = $_GET['a_time']; 	//time einlesen
 //$a_time = $_GET['a_time'];
-$luminance[0] = $_GET['w'];  //wert für weiss einlesen
-$luminance[1] = $_GET['r'];  //wert für rot einlesen
-$luminance[2] = $_GET['g'];  //wert für gruen einlesen
-$luminance[3] = $_GET['b'];  //wert für blau einlesen
+//read the config file and save results in array
+//the configfiles layout is like that:
+//      colorCode;  pin;  font-color; background-color; colorName
+//e.g.  w           17    black       whitesmoke        weiß
+$nColors = 0;
+if (($handle = fopen("colors.csv", "r")) !== FALSE) 
+{
+	while (($colorConfig = fgetcsv($handle, 1000, ";")) !== FALSE) 
+	{
+  	$num = count($colorConfig);
+  	for ($c=0; $c < $num; $c++) 
+  	{
+       $globalConfig[$nColors][$c]=$colorConfig[$c];
+    }
+    $nColors++;
+  }
+  fclose($handle);
+}
 
+for ($color=0; $color < $nColors; $color++) 
+{
+	$luminance[$color] = $_GET[$globalConfig[$color][0]];  //wert einlesen
+}
 //alternative werte aus den input fields einlesen
 // $alternative[0] = $_GET['a_white'];
 // $alternative[1] = $_GET['a_red'];
 // $alternative[2] = $_GET['a_green'];
 // $alternative[3] = $_GET['a_blue'];
 
-
+/*
 $colorName = array( //array for the names of the colors (matching the names in led-blaster)
 0 => 'w',
 1 => 'r',
 2 => 'g',
 3 => 'b',
  );
-
+*/
 if($time == "")  //if there's nothing in the variable the input field was empty -> we'll take the range input field then
 {
   	$time=$_GET['time'];     // default is time=1000
@@ -49,7 +67,7 @@ if($time == "")  //if there's nothing in the variable the input field was empty 
 $numberOfChangedBrightness = 0;
 
 
-for ($color = 0; $color < 4; $color++) //some things we have to apply to each color
+for ($color = 0; $color < $nColors; $color++) //some things we have to apply to each color
 {
     //if luminance[color] is an empty string we won't do anything
 	if ($luminance[$color] != -1 && $luminance[$color] != "") 	//if color is -1 we don't have to do anything since it means 'no change in brightness'
@@ -71,7 +89,7 @@ if ($time != "")
 if ($numberOfChangedBrightness > 0) //only if we have to change the brightness of at least one color
 {
 	//enter mode 0 so we can set brightness manually
-    	$cmd = "echo mode=0 > /dev/led-blaster";
+  $cmd = "echo mode=0 > /dev/led-blaster";
 	$val =  shell_exec($cmd);
 	echo $cmd . "<br>";
 	//set wait counter to $numberOfChangedBrightness (itll fade after changing four colorBrightnesses if everything was changed
@@ -79,11 +97,11 @@ if ($numberOfChangedBrightness > 0) //only if we have to change the brightness o
 	$val =  shell_exec($cmd);
 	echo $cmd . "<br>";							//debugging info (only used at the beginning)
 	//FADE
-	for ($color = 0; $color < 4; $color++) //write every color's brightness to fifo
+	for ($color = 0; $color < $nColors; $color++) //write every color's brightness to fifo
 	{
 		if ($luminance[$color] != -1 && $luminance[$color] != "") //if we have to change the brightness and theres acutally a brightness ;_)
 		{
-			$cmd = "echo ". $colorName[$color] . "=" . $luminance[$color] . " > /dev/led-blaster"; 	//set each brightness WRGB
+			$cmd = "echo ". $globalConfig[$color][0] . "=" . $luminance[$color] . " > /dev/led-blaster"; 	//set each brightness WRGB
 			$val =  shell_exec($cmd);
             echo "<br>" . $cmd . "<br>\n";
 		}
