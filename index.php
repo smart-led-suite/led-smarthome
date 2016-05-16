@@ -142,11 +142,13 @@
                                      <div class="mdl-cell mdl-cell--5-col-desktop mdl-cell--3-col-tablet mdl-cell--3-col-phone">
                                         <form action="fade.php" method="get">
                                         	<input type="hidden" name="url" value="<?php echo $_SERVER['PHP_SELF'] ?>" />
-
-                                            <input type="hidden" name="w" value="0">
-                                            <input type="hidden" name="r" value="0">
-                                            <input type="hidden" name="g" value="0">
-                                            <input type="hidden" name="b" value="0">
+                                        	<?php
+                                        	//set every color to 0 
+																					for ($color=0; $color < $nColors; $color++) 
+																					{
+                          									echo "<input type=\"hidden\" name=\"" . $globalConfig[$color][0] . "\" value=\"0\"> \n";             
+                        									} ?>
+                                            <!-- and mode also to 0-->
                                             <input type="hidden" name="mode" value="0">
                                            <!-- Accent-colored raised button with ripple -->
                                             <button  onclick="showFadingInfo()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
