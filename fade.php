@@ -89,8 +89,8 @@ if ($time != "")
 if ($numberOfChangedBrightness > 0) //only if we have to change the brightness of at least one color
 {
 	//enter mode 0 so we can set brightness manually
-  $cmd = "echo mode=0 > /dev/led-blaster";
-	$val =  shell_exec($cmd);
+  //$cmd = "echo mode=0 > /dev/led-blaster";
+	//$val =  shell_exec($cmd);
 	echo $cmd . "<br>";
 	//set wait counter to $numberOfChangedBrightness (itll fade after changing four colorBrightnesses if everything was changed
     	$cmd = "echo wait=$numberOfChangedBrightness > /dev/led-blaster";
