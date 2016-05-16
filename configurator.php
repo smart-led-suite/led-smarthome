@@ -137,7 +137,7 @@
                 <tr>
                   <th class="mdl-data-table__cell--non-numeric">Farbname</th>
                   <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >ColorCode</th>
-                  <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >Pin</th>
+                  <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >GPIO-Pin</th>
                   <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >Farbe</th>
                   <th class="mdl-data-table__cell--non-numeric" style="width:auto;" >Textfarbe</th>
                 </tr>
@@ -177,7 +177,7 @@
                     echo "<input class=\"mdl-textfield__input\" type=\"number\" id=\"pin" . $globalConfig[$color][0] . "\" ";
                     echo " name=\"pin[]\" value=\"". $globalConfig[$color][1] . "\"> \n";
                     //generate label
-                    echo "<label class=\"mdl-textfield__label\" for=\"pin" . $globalConfig[$color][0] . "\">Pin</label> \n";
+                    echo "<label class=\"mdl-textfield__label\" for=\"pin" . $globalConfig[$color][0] . "\">GPIO-Pin</label> \n";
                     echo "</div> \n"; //end of div container
                     echo "</td>  \n"; //end of this data part
                     //FARBE / COLOR
