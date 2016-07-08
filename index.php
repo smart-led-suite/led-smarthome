@@ -14,10 +14,10 @@
     <link rel="icon"
           type="image/ico"
           href="favicon.ico">
-     <!-- import google material design apis -->
-     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-blue.min.css" />
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+     <!-- import OFFLINE google material design apis -->
+     <link rel="stylesheet" href="./mdl-files/material.indigo-blue.min.css">
+     <script src="./mdl-files/material.min.js"></script>
+    <link rel="stylesheet" href="./mdl-files/material-icons.css">
     <!-- import custom stylesheet -->
     <link rel="stylesheet" media="screen" href="newdesign.css">
     <!-- add background -->
@@ -33,6 +33,12 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header led-layout ">
         <header class="mdl-layout__header mdl-layout__header--scroll">
           <div class="mdl-layout-icon">favicon.ico</div>
+          <!-- add the drawer button and align it properly -->
+          <div class="mdl-layout__drawer-button" tabindex="0" role="button" aria-expanded="false">
+            <div style="margin-top:12px" >
+              <img src="./ic_menu_white_24dp_1x.png" alt="" />
+            </div>
+          </div>
             <div class="mdl-layout__header-row">
                 <!-- Title -->
                 <span class="mdl-layout-title">LED Control Panel</span>
@@ -44,6 +50,7 @@
                   <a class="mdl-navigation__link" href="index-oldhtml.html">alte Fadeseite</a>
                 </nav>
             </div>
+
         </header>
        <!-- drawer -->
         <div class="mdl-layout__drawer">
@@ -143,10 +150,10 @@
                                         <form action="fade.php" method="get">
                                         	<input type="hidden" name="url" value="<?php echo $_SERVER['PHP_SELF'] ?>" />
                                         	<?php
-                                        	//set every color to 0 
-																					for ($color=0; $color < $nColors; $color++) 
+                                        	//set every color to 0
+																					for ($color=0; $color < $nColors; $color++)
 																					{
-                          									echo "<input type=\"hidden\" name=\"" . $globalConfig[$color][0] . "\" value=\"0\"> \n";             
+                          									echo "<input type=\"hidden\" name=\"" . $globalConfig[$color][0] . "\" value=\"0\"> \n";
                         									} ?>
                                             <!-- and mode also to 0-->
                                             <input type="hidden" name="mode" value="0">

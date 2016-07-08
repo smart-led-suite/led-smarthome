@@ -14,10 +14,10 @@
     <link rel="icon"
           type="image/ico"
           href="favicon.ico">
-     <!-- import google material design apis -->
-     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-blue.min.css" />
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+     <!-- import OFFLINE google material design apis -->
+     <link rel="stylesheet" href="./mdl-files/material.indigo-blue.min.css">
+     <script src="./mdl-files/material.min.js"></script>
+    <link rel="stylesheet" href="./mdl-files/material-icons.css">
     <!-- import custom stylesheet -->
     <link rel="stylesheet" media="screen" href="newdesign.css">
     <!-- add background -->
@@ -51,6 +51,12 @@
          <!-- drawer -->
           <div class="mdl-layout__drawer">
               <span class="mdl-layout-title">LED Control Panel</span>
+              <!-- add the drawer button and align it properly -->
+              <div class="mdl-layout__drawer-button" tabindex="0" role="button" aria-expanded="false">
+                <div style="margin-top:12px" >
+                  <img src="./ic_menu_white_24dp_1x.png" alt="" />
+                </div>
+              </div>
               <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="index.php">Fadeseite</a>
                 <a class="mdl-navigation__link" href="wecker.php">Wecker (beta)</a>
